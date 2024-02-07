@@ -21,8 +21,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     address2 = models.TextField(default="")
     address3 = models.TextField(default="")
     pincode = models.IntegerField(default=0)
-    first_name = models.CharField(default="")
-    last_name = models.CharField(default="")
+    first_name = models.CharField(default="", max_length=30)
+    last_name = models.CharField(default="", max_length=30)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
