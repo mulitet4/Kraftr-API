@@ -9,10 +9,12 @@ py manage.py runserver
 ```
 
 ## Todo
-- [ ] Add required fields to Custom User Model
+- [x] Add required fields to Custom User Model
 - [ ] Add required fields to Bag Model
-- [ ] Make Views for getting Cart Items
-- [ ] Make View for getting all Products
+- [x] Make Views for getting Cart Items
+- [x] Make View for getting all Products
+- [ ] View for getting product by id
+- [ ] Try using Product in ListAllProducts
 
 ## Tips
 * Create a virtual environment.
