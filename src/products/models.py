@@ -8,7 +8,6 @@ class Photo(models.Model):
   image = models.ImageField(upload_to='images/products')
   name = models.CharField(max_length=100)
 
-
 class Product(PolymorphicModel):
   name = models.CharField(max_length=100)
   price = models.IntegerField()
@@ -16,14 +15,12 @@ class Product(PolymorphicModel):
   description = models.TextField()
   
 
-
 # Shoe Models
 class ShoeType(models.Model):
   name = models.CharField(max_length=100)
 
   def __str__(self) -> str:
     return self.name
-
 
 class ShoeSize(models.Model):
   class ShoeSizeType(models.TextChoices):
@@ -40,7 +37,6 @@ class ShoeSize(models.Model):
   
   def __str__(self):
       return self.shoe_size_type + " " + str(self.size)
-
 
 class Shoe(Product):
   stock = models.IntegerField(default=0)

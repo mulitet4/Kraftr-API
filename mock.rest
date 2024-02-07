@@ -1,11 +1,17 @@
 POST http://127.0.0.1:8000/api/v1/user/register
 Content-Type: application/json
 
-{"username": "mulitate4", "password": "crazyfrog123"}
+{"email": "test12345@gmail.com", "password": "test12345"}
 
 ###
 
 POST http://127.0.0.1:8000/api/v1/user/login
 Content-Type: application/json
 
-{"username": "mulitate4", "password": "crazyfrog123"}
+{"email": "test12345@gmail.com", "password": "test12345"}
+
+####
+POST http://127.0.0.1:8000/api/v1/user/cart  HTTP/1.1
+Authorization: Bearer c6996622b73ff31496272a601235180db02b7d4a
+
+####

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Shoe, ShoeSize, ShoeType, Photo
+from .models import *
 
 # depth = 1
 # inline serializers
@@ -30,4 +30,16 @@ class ShoeSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Shoe
-    fields = ['id', 'name', 'shoe_type', 'shoe_sizes', 'stock', 'cover_image', 'images', 'featured', 'price', 'description']
+    fields = '__all__'
+  
+class BagSerializer(serializers.ModelSerializer):
+  # images = PhotoInlineSerializer('images', many=True)
+
+  class Meta:
+    model = Bag
+    fields = '__all__'
+  
+class ProductSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Product
+    fields = '__all__'
