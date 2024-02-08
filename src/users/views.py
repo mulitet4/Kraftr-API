@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions
+from rest_framework import permissions, authentication
 from rest_framework import status
 
 from django.contrib.auth import get_user_model
@@ -15,6 +15,10 @@ from .serializers import UserSerializer, CartSerializer
 
 User=get_user_model()
 
+
+# ----
+# User
+# ----
 @api_view(["POST"])
 def register(request):
   serializer = UserSerializer(data=request.data)
@@ -51,11 +55,16 @@ def login(request):
   return Response({"token": token.key, "user": serializer.data})
 
 
+# ----------
+# Cart Views
+# ----------
 class ListCart(APIView):
   permission_classes = [permissions.IsAuthenticated]
+  authentication_classes = (authentication.TokenAuthentication,)
+
   def get(self, request):
-    cart = Cart.objects.filter(user=request.user)
-    cart_serializer = CartSerializer(cart, many=True)
+    cart = Cart.objects.get_or_create(user=request.user)[0]
+    cart_serializer = CartSerializer(cart)
 
     return Response({"cart": cart_serializer.data}, status.HTTP_200_OK)
 
@@ -64,6 +73,17 @@ class ListCart(APIView):
 def addCart(request):
   user_cart = Cart.objects.get_or_create(user=request.user)[0]
   user_cart.cart.add(request.data["id"])
+  user_cart.save()
+
+  user_cart_serializer = CartSerializer(user_cart)
+
+  return Response({"cart_details": user_cart_serializer.data})
+
+
+@api_view(["POST"])
+def deleteCart(request, **kwargs):
+  user_cart = Cart.objects.get_or_create(user=request.user)[0]
+  user_cart.cart.remove(kwargs["id"])
   user_cart.save()
 
   user_cart_serializer = CartSerializer(user_cart)

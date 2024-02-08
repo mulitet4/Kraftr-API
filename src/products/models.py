@@ -13,7 +13,8 @@ class Product(PolymorphicModel):
   price = models.IntegerField()
   featured = models.BooleanField(default=False)
   description = models.TextField()
-  
+  cover_image = models.ImageField(null=True, blank=True, upload_to='images/products')
+  images = models.ManyToManyField(Photo, blank=True)
 
 # Shoe Models
 class ShoeType(models.Model):
@@ -40,8 +41,6 @@ class ShoeSize(models.Model):
 
 class Shoe(Product):
   stock = models.IntegerField(default=0)
-  cover_image = models.ImageField(null=True, blank=True, upload_to='images/products')
-  images = models.ManyToManyField(Photo, blank=True)
   shoe_type = models.ForeignKey(ShoeType, models.SET_NULL, null=True)
   shoe_sizes = models.ManyToManyField(ShoeSize)
 

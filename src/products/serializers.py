@@ -33,13 +33,14 @@ class ShoeSerializer(serializers.ModelSerializer):
     fields = '__all__'
   
 class BagSerializer(serializers.ModelSerializer):
-  # images = PhotoInlineSerializer('images', many=True)
 
   class Meta:
     model = Bag
     fields = '__all__'
   
 class ProductSerializer(serializers.ModelSerializer):
+  images = PhotoInlineSerializer('images', many=True)
+
   class Meta:
     model = Product
     fields = '__all__'

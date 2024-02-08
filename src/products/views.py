@@ -13,13 +13,15 @@ class ListShoes(APIView):
 
     return Response({"shoes": shoe_serializer.data}, status.HTTP_200_OK)
 
+
 class ListShoeById(APIView):
   def get(self, request, **kwargs):
     shoe = Shoe.objects.filter(id=self.kwargs["id"]).first()
     shoe_serializer = ShoeSerializer(shoe)
     
     return Response({"shoe": shoe_serializer.data}, status.HTTP_200_OK)
-  
+
+
 class ListFeaturedShoes(APIView):
   def get(self, request):
     shoes = Shoe.objects.filter(featured=True)
