@@ -33,7 +33,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class CartItem(models.Model):
+  user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+  product = models.OneToOneField(Product, models.CASCADE)
+  quantity = models.IntegerField(default=0)
+
+  def __str__(self) -> str:
+     return str(self.product) + " " + str(self.quantity)
+
+
 class Cart(models.Model):
   user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
-  cart = models.ManyToManyField(Product)
+  cart_items = models.ManyToManyField(CartItem)
 
