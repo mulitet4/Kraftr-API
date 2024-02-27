@@ -101,6 +101,33 @@ def addCart(request):
 @api_view(["POST"])
 @authentication_classes([authentication.TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
+def changeCartQuantity(request):
+  user_cart = Cart.objects.get_or_create(user=request.user)[0]
+  product_id = request.data["id"]
+  quantity = request.data["quantity"]
+  
+  to_change_item = Product.objects.get(id=product_id)
+
+  if len(user_cart.cart_items.filter(product=to_change_item)) == 0:
+    new_cart_item = CartItem.objects.create(product=to_change_item, quantity=quantity, user=request.user)
+    user_cart.cart_items.add(new_cart_item)
+    user_cart.save()
+  
+  else:
+    cart_item: CartItem = user_cart.cart_items.get(product=to_change_item)
+    cart_item.quantity = quantity
+    cart_item.save()
+
+  user_cart = Cart.objects.get(user=request.user)[0]
+
+  user_cart_serializer = CartSerializer(user_cart)
+
+  return Response({"cart": user_cart_serializer.data})
+
+
+@api_view(["POST"])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
 def deleteCart(request, **kwargs):
   user_cart = Cart.objects.get_or_create(user=request.user)[0]
   product_id = request.data["id"]

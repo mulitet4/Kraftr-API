@@ -3,4 +3,4 @@ db.sqlite3
 src/users/migrations/*
 src/products/migrations/*
 media/*
-__pycache__/*
+__pycache__
